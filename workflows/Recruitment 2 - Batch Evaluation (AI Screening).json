@@ -117,6 +117,12 @@
       "name": "Download CV",
       "retryOnFail": true,
       "waitBetweenTries": 3000,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "uVhoTyfLN9E4bajC",
+          "name": "Google Drive account"
+        }
+      },
       "onError": "continueErrorOutput"
     },
     {
@@ -200,7 +206,7 @@
         "resource": "document",
         "modelId": {
           "__rl": true,
-          "value": "YOUR_ID",
+          "value": "models/gemini-3.5-flash-lite",
           "mode": "list",
           "cachedResultName": "models/gemini-3.5-flash-lite"
         },
@@ -216,6 +222,12 @@
       "name": "OCR Scanned CV",
       "retryOnFail": true,
       "waitBetweenTries": 3000,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "6LMV1f80rGZvL3YD",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      },
       "onError": "continueErrorOutput"
     },
     {
@@ -335,6 +347,12 @@
       "name": "Extract Candidate Profile",
       "retryOnFail": true,
       "waitBetweenTries": 3000,
+      "credentials": {
+        "googlePalmApi": {
+          "id": "6LMV1f80rGZvL3YD",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      },
       "onError": "continueErrorOutput"
     },
     {
@@ -382,7 +400,13 @@
         240
       ],
       "id": "f112c987-1ac2-4e07-b543-be2842826bbd",
-      "name": "Fixing Model"
+      "name": "Fixing Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "b0i6UqOSrhYJJoki",
+          "name": "OpenRouter account"
+        }
+      }
     },
     {
       "parameters": {
@@ -396,7 +420,13 @@
         48
       ],
       "id": "f44ee9dd-c3c5-4128-b97e-409d2c8b9db5",
-      "name": "Scoring Model"
+      "name": "Scoring Model",
+      "credentials": {
+        "groqApi": {
+          "id": "BF2QNqQb9AAKWc1b",
+          "name": "Groq account"
+        }
+      }
     },
     {
       "parameters": {
@@ -410,7 +440,13 @@
         32
       ],
       "id": "da04fa73-89c2-4b34-af4f-f9a073ef4507",
-      "name": "Profile Model"
+      "name": "Profile Model",
+      "credentials": {
+        "groqApi": {
+          "id": "BF2QNqQb9AAKWc1b",
+          "name": "Groq account"
+        }
+      }
     },
     {
       "parameters": {
@@ -567,11 +603,17 @@
       ],
       "id": "e9d59512-f835-4eef-a6b9-cd2828d9260a",
       "name": "Send Polite Decline",
-      "webhookId": "d5af0da8-1e64-4c15-a2b1-6f21a9632965"
+      "webhookId": "d5af0da8-1e64-4c15-a2b1-6f21a9632965",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BXSveKXkJzQFnjfe",
+          "name": "Gmail account"
+        }
+      }
     },
     {
       "parameters": {
-        "sendTo": "YOUR_SENDTO",
+        "sendTo": "nouryounis666@gmail.com",
         "subject": "=Borderline candidate: {{ $('Validate Evaluation').first().json.name }} - {{ $('Validate Evaluation').first().json.position }} ({{ $('Validate Evaluation').first().json.score }}/100)",
         "message": "=<div style=\"font-family: -apple-system, sans-serif; color: #1e293b; max-width: 650px; background: #f8fafc; padding: 30px;\">   <div style=\"background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);\">          <div style=\"background: #f59e0b; padding: 20px; color: white;\">       <h2 style=\"margin: 0; font-size: 20px;\">Manual Review Required (Borderline Candidate)</h2>     </div>      <div style=\"padding: 24px;\">       <h3 style=\"margin-top: 0; color: #0f172a; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;\">Candidate Profile</h3>       <table style=\"width: 100%; font-size: 14px; margin-bottom: 20px;\">         <tr><td style=\"padding: 6px 0; font-weight: bold; width: 130px;\">Name:</td><td>{{ $('Prepare Application').item.json.name }}</td></tr>         <tr><td style=\"padding: 6px 0; font-weight: bold;\">Position:</td><td>{{ $('Prepare Application').item.json.position }}</td></tr>         <tr><td style=\"padding: 6px 0; font-weight: bold;\">AI Score:</td><td><strong style=\"color: #ea580c; font-size: 16px;\">{{ $json.score }}/100</strong></td></tr>       </table>        <h3 style=\"color: #0f172a; font-size: 16px; margin: 20px 0 10px 0;\">Executive Summary</h3>       <p style=\"margin: 0 0 10px 0; font-size: 14px;\"><strong>Strengths:</strong> {{ $json.strengths }}</p>       <p style=\"margin: 0 0 20px 0; font-size: 14px;\"><strong>Concerns:</strong> <span style=\"color: #dc2626;\">{{ $json.concerns }}</span></p>        <h3 style=\"color: #0f172a; font-size: 16px; margin: 20px 0 10px 0;\">Skills Analysis</h3>       <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 4px; margin-bottom: 10px; font-size: 14px;\">         <strong>Matched Requirements:</strong><br>{{ $json.matched_requirements.join(' • ') }}       </div>       <div style=\"background: #fef2f2; border: 1px solid #fecaca; padding: 12px; border-radius: 4px; font-size: 14px;\">         <strong>Missing Requirements:</strong><br>{{ $json.missing_requirements.join(' • ') }}       </div>        <h3 style=\"color: #0f172a; font-size: 16px; margin: 25px 0 10px 0;\">Suggested Interview Questions (If Proceeding)</h3>       <ul style=\"margin: 0; padding-left: 20px; font-size: 14px; color: #334155;\">         {{ $json.interview_questions.map(q => `<li style=\"margin-bottom: 8px;\">${q}</li>`).join('') }}       </ul>     </div>   </div> </div>",
         "options": {
@@ -586,22 +628,30 @@
       ],
       "id": "5a471b83-d240-4c48-b4a9-4c2cb59aeeca",
       "name": "Flag Borderline for HR",
-      "webhookId": "7e397d84-d251-4216-875a-38991a16bac0"
+      "webhookId": "7e397d84-d251-4216-875a-38991a16bac0",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BXSveKXkJzQFnjfe",
+          "name": "Gmail account"
+        }
+      }
     },
     {
       "parameters": {
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "mode": "id",
-          "value": "YOUR_ID"
+          "value": "1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8",
+          "mode": "list",
+          "cachedResultName": "Horizon Byte - Applications",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Applications",
-          "cachedResultUrl": "YOUR_GOOGLE_URL"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -799,27 +849,35 @@
         544
       ],
       "id": "26a2150a-780e-44a0-bb3b-babcc91246a7",
-      "name": "Save Result to Sheet"
+      "name": "Save Result to Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kudya68vP69F8SHG",
+          "name": "Google Sheets account"
+        }
+      }
     },
     {
       "parameters": {
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "mode": "id",
-          "value": "YOUR_ID"
+          "value": "1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8",
+          "mode": "list",
+          "cachedResultName": "Horizon Byte - Applications",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Applications",
-          "cachedResultUrl": "YOUR_GOOGLE_URL"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "CV File ID": "={{ $('Prepare Application').item.json.CVFileId }}",
+            "CV File ID": "={{ $json.CVFileId }}",
             "Read Method\tProblems": "={{ $json.problems }}",
             "Evaluated At": "={{ $now.toFormat('yyyy-MM-dd HH:mm') }}",
             "Status": "manual review"
@@ -1011,7 +1069,13 @@
         480
       ],
       "id": "f0ed7afb-8b86-4bbb-873b-3c0a9258932e",
-      "name": "Mark for Manual Review"
+      "name": "Mark for Manual Review",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kudya68vP69F8SHG",
+          "name": "Google Sheets account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1030,11 +1094,17 @@
       ],
       "id": "4fc94652-18d8-4a1c-bedc-9c805ad8db9f",
       "name": "Invite to Interview",
-      "webhookId": "6f73a7cc-53a2-401c-88d7-eb137a8f41ec"
+      "webhookId": "6f73a7cc-53a2-401c-88d7-eb137a8f41ec",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BXSveKXkJzQFnjfe",
+          "name": "Gmail account"
+        }
+      }
     },
     {
       "parameters": {
-        "sendTo": "YOUR_SENDTO",
+        "sendTo": "nouryounis666@gmail.com",
         "subject": "=Candidate to interview: {{ $('Validate Evaluation').first().json.name }} - {{ $('Validate Evaluation').first().json.position }} ({{ $('Validate Evaluation').first().json.score }}/100)",
         "message": "=<div style=\"font-family: -apple-system, sans-serif; color: #1e293b; max-width: 700px; background: #f8fafc; padding: 30px;\">\n  <div style=\"background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);\">\n    \n    <div style=\"background: #0f766e; padding: 24px; color: white;\">\n      <p style=\"margin: 0 0 4px 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;\">Candidate Report</p>\n      <h2 style=\"margin: 0; font-size: 24px;\">{{ $('Prepare Application').item.json.name }} - {{ $('Validate Evaluation').item.json.score }}/100</h2>\n    </div>\n\n    <div style=\"padding: 32px 24px;\">\n      <table style=\"width: 100%; font-size: 14px; margin-bottom: 24px; line-height: 1.6;\">\n        <tr><td style=\"font-weight: bold; width: 100px;\">Position:</td><td>{{ $('Prepare Application').item.json.position }}</td></tr>\n        <tr><td style=\"font-weight: bold;\">Email:</td><td><a href=\"mailto:{{ $('Prepare Application').item.json.email }}\">{{ $('Prepare Application').item.json.email }}</a></td></tr>\n        <tr><td style=\"font-weight: bold;\">Experience:</td><td>{{ $('Validate Evaluation').item.json.yearsExperience }} years</td></tr>\n        <tr><td style=\"font-weight: bold;\">Top skills:</td><td>{{ $('Validate Evaluation').item.json.topSkills }}</td></tr>\n      </table>\n\n      <h3 style=\"color: #0f172a; font-size: 16px; margin: 0 0 10px 0;\">Strengths</h3>\n      <p style=\"margin: 0 0 24px 0; font-size: 14px; line-height: 1.6;\">{{ $('Validate Evaluation').item.json.strengths }}</p>\n\n      <h3 style=\"color: #0f172a; font-size: 16px; margin: 0 0 10px 0;\">Missing</h3>\n      <ul style=\"margin: 0 0 24px 0; padding-left: 20px; font-size: 14px; color: #475569; line-height: 1.6;\">\n        {{ ($('Validate Evaluation').item.json.missing_requirements || []).map(req => `<li style=\"margin-bottom: 6px;\">${req}</li>`).join('') }}\n      </ul>\n\n      <h3 style=\"color: #0f172a; font-size: 16px; margin: 0 0 10px 0;\">Suggested Interview Questions</h3>\n      <div style=\"background: #f1f5f9; padding: 20px; border-radius: 6px;\">\n        <ol style=\"margin: 0; padding-left: 20px; font-size: 14px; color: #334155; line-height: 1.7;\">\n          {{ ($('Validate Evaluation').item.json.interview_questions || []).map(q => `<li style=\"margin-bottom: 12px;\">${q}</li>`).join('') }}\n        </ol>\n      </div>\n    </div>\n  </div>\n</div>",
         "options": {
@@ -1049,7 +1119,13 @@
       ],
       "id": "f9852023-c7ff-40a7-a073-83154a405aa8",
       "name": "Send Profile Details (HR Email)",
-      "webhookId": "aff582c0-8c55-4fe8-84fd-d29e0ccac41c"
+      "webhookId": "aff582c0-8c55-4fe8-84fd-d29e0ccac41c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BXSveKXkJzQFnjfe",
+          "name": "Gmail account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1100,7 +1176,7 @@
     },
     {
       "parameters": {
-        "sendTo": "YOUR_SENDTO",
+        "sendTo": "nouryounis666@gmail.com",
         "subject": "=Action Required: Manual CV Review - {{ $('Current Application').item.json.name }}",
         "message": "=<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1e293b; max-width: 600px; background: #f8fafc; padding: 30px;\">   <div style=\"background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);\">          <div style=\"background: #dc2626; padding: 20px; color: white;\">       <h2 style=\"margin: 0; font-size: 20px;\">Manual CV Review Required</h2>     </div>      <div style=\"padding: 24px;\">       <p style=\"margin-top: 0; font-size: 15px; color: #334155;\">The automated screening pipeline encountered an issue processing an application and requires manual human review.</p>              <table style=\"width: 100%; font-size: 14px; margin: 20px 0; border-collapse: collapse;\">         <tr>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: bold; width: 120px; color: #64748b;\">Candidate:</td>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0;\">{{ $('Current Application').item.json.name }}</td>         </tr>         <tr>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #64748b;\">Position:</td>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0;\">{{ $('Current Application').item.json.position }}</td>         </tr>         <tr>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #64748b;\">Email:</td>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0;\">             <a href=\"mailto:{{ $('Current Application').item.json.email }}\" style=\"color: #2563eb; text-decoration: none;\">{{ $('Current Application').item.json.email }}</a>           </td>         </tr>       </table>        <h3 style=\"color: #0f172a; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; margin: 24px 0 8px 0;\">Error Details / Reason</h3>       <div style=\"background: #fef2f2; border-left: 4px solid #ef4444; padding: 16px; border-radius: 4px; font-size: 14px; color: #991b1b; font-family: monospace;\">\n  {{ $json.problems || 'Unknown failure in processing pipeline.' }}\n</div>        <p style=\"margin: 24px 0 0 0; font-size: 14px; color: #64748b;\">The Google Sheet has been updated with a \"manual review\" status for this record.</p>     </div>   </div> </div>",
         "options": {
@@ -1115,7 +1191,13 @@
       ],
       "id": "57771bf8-174b-4ac9-81cf-b8aa4966cd76",
       "name": "Notify HR: Manual Review",
-      "webhookId": "28db6f8d-d554-44a9-8efa-536779602dea"
+      "webhookId": "28db6f8d-d554-44a9-8efa-536779602dea",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BXSveKXkJzQFnjfe",
+          "name": "Gmail account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1169,14 +1251,14 @@
         "documentId": {
           "__rl": true,
           "mode": "id",
-          "value": "YOUR_ID"
+          "value": "1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Applications",
-          "cachedResultUrl": "YOUR_GOOGLE_URL"
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8/edit#gid=0"
         },
         "filtersUI": {
           "values": [
@@ -1196,9 +1278,16 @@
       ],
       "id": "f007c842-482e-495c-9123-398183fb14d0",
       "name": "Get New Applications",
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kudya68vP69F8SHG",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
+  "pinData": {},
   "connections": {
     "Run Batch Now": {
       "main": [
@@ -1599,5 +1688,11 @@
     "executionTimeout": -1,
     "availableInMCP": false
   },
-  "nodeGroups": []
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c80dc7e3d47cdb12d1bdbe5ca22544a4f0ea5b853d5b8de8aaff846a134e6683"
+  },
+  "nodeGroups": [],
+  "id": "OZFysj25VFLincSV",
+  "tags": []
 }
