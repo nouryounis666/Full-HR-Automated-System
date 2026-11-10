@@ -1,0 +1,281 @@
+{
+  "name": "HR Policy Assistant (RAG)",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Upload HR Policy Documents",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Policy Documents",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf,.docx,.txt",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -1216,
+        752
+      ],
+      "id": "48dea5d3-bd95-408d-bbbb-726868fd52f4",
+      "name": "Upload Policy Documents",
+      "webhookId": "6cdde5fe-6487-4ba4-a0a9-4dcf8fe7ec96"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        784
+      ],
+      "id": "5a96aec0-7191-4dc4-a7ac-59107421f559",
+      "name": "Groq Chat Model"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are the HR Policy Assistant for the company. Employees ask you questions about company policies.\n\nRules:\n1. Always search the hr_policies tool before answering. Never answer from general knowledge.\n2. Answer only with facts found in the policy documents. Quote numbers, dates and limits exactly.\n3. End every answer with the source, for example: (Source: Leave Policy).\n4. If the documents do not cover the question, say: \"I couldn't find this in the company policies. Please contact HR at you@example.com\"\n5. Keep answers short and clear, using bullet points for steps or lists.\n6. Reply in the same language the employee used.\n\nWhen using the tool to search, you MUST pass your search text using the parameter name 'input'. Do NOT use 'query'."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -208,
+        560
+      ],
+      "id": "5a421609-2600-4549-87fe-31195d595f9a",
+      "name": "HR Assistant"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -496,
+        560
+      ],
+      "id": "91d89dec-90d4-493c-8585-2bb04c856f82",
+      "name": "Employee Questions",
+      "webhookId": "d0a622c1-f5ab-4ff0-a8a5-ac60334bb23a"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "id",
+          "value": "hr_policies"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -960,
+        544
+      ],
+      "id": "b024211a-40cd-4a06-b4e6-20360122c68c",
+      "name": "Add to Knowledge Base"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -976,
+        768
+      ],
+      "id": "77fff701-03bb-4b24-807e-e41f8ea671ba",
+      "name": "Gemini Embeddings (Insert)"
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -848,
+        768
+      ],
+      "id": "2075d82f-4c16-4398-92ad-426dab5d34be",
+      "name": "Read Uploaded Files"
+    },
+    {
+      "parameters": {
+        "chunkOverlap": 200,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        976
+      ],
+      "id": "e20e9bee-f38c-4b44-aa84-4e3295ff2f23",
+      "name": "Split Into Chunks"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 6
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -144,
+        784
+      ],
+      "id": "85a2e1f0-30a3-412f-bf93-67b562b44162",
+      "name": "Conversation Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Search the company HR policy documents. Use it for any question about leave, working hours, remote work, salaries, benefits, expenses, training, conduct or other company rules.",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "hr_policies"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -16,
+        784
+      ],
+      "id": "d3a32ba1-4f23-45d7-9ce9-52c8e9ef88eb",
+      "name": "Search HR Policies"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        992
+      ],
+      "id": "2fa33976-5b35-4797-ad2e-cf3efdcf3e17",
+      "name": "Gemini Embeddings (Search)"
+    }
+  ],
+  "connections": {
+    "Upload Policy Documents": {
+      "main": [
+        [
+          {
+            "node": "Add to Knowledge Base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "HR Assistant",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Employee Questions": {
+      "main": [
+        [
+          {
+            "node": "HR Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Embeddings (Insert)": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Add to Knowledge Base",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Uploaded Files": {
+      "ai_document": [
+        [
+          {
+            "node": "Add to Knowledge Base",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Into Chunks": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Read Uploaded Files",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "HR Assistant",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search HR Policies": {
+      "ai_tool": [
+        [
+          {
+            "node": "HR Assistant",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Embeddings (Search)": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Search HR Policies",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "nodeGroups": []
+}

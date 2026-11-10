@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NourFlow HR | Enterprise AI & Automation Portfolio</title>
+  <link rel="icon" type="image/x-icon" href="https://nourtamer.duckdns.org/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: { 50: '#fff1f4', 100: '#ffe0e7', 200: '#fdc5d2', 300: '#fb9db3', 400: '#f97a97', 500: '#f75c7e', 600: '#e0436a', 700: '#c0305a', 800: '#9f284b' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+  
+    #overview > div, #workflows .grid > div, #downloads .grid > div {
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    #overview > div:hover, #workflows .grid > div:hover, #downloads .grid > div:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 34px rgba(247,92,126,.16);
+      border-color: #fdc5d2;
+    }
+    a, button { transition: background-color .2s ease, transform .2s ease, box-shadow .2s ease; }
+    a.btn-lift:hover, form button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(247,92,126,.28); }
+    a.disabled { pointer-events: none; opacity: .45; }
+    .wf-tab { transition: all .2s ease; }
+    .wf-tab[aria-selected="true"] { background:#f75c7e; color:#fff; border-color:#f75c7e; }
+    .wf-tab[aria-selected="false"]:hover { border-color:#f75c7e; color:#e0436a; transform: translateY(-1px); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Top Announcement Bar / Status Header -->
+  <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <!-- زرار صعود للأعلى سريع من اللوجو أو الاسم في الـ Navbar -->
+        <a href="#" class="flex items-center space-x-3 group">
+          <div class="w-9 h-9 rounded-lg bg-brand-600 flex items-center justify-center font-bold text-white text-lg shadow group-hover:bg-brand-500 transition">NF</div>
+          <div>
+            <span class="font-bold text-lg tracking-tight group-hover:text-brand-300 transition">NourFlow HR</span>
+            <span class="hidden sm:inline-block ml-2 text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full border border-slate-700">Enterprise AI Suite</span>
+          </div>
+        </a>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" id="statusDot"></span>
+          <span class="text-xs font-medium text-slate-200" id="statusText">Checking system...</span>
+        </div>
+        <a href="#canvas" class="hidden lg:inline-flex items-center justify-center px-4 py-1.5 text-xs font-semibold text-slate-200 hover:text-white border border-slate-700 hover:border-brand-500 rounded-lg transition">Workflow Canvas</a>
+        <a href="#sandbox" class="hidden md:inline-flex items-center justify-center px-4 py-1.5 text-xs font-semibold text-white bg-brand-600 hover:bg-brand-500 rounded-lg transition shadow-sm">
+          Test Live System
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-b from-slate-900 to-slate-800 text-white py-16 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#f75c7e_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="max-w-4xl mx-auto relative z-10">
+      <span class="inline-block bg-brand-500/20 text-brand-300 text-xs font-semibold px-3 py-1 rounded-full mb-4 border border-brand-500/30">
+        n8n Workflow Automation & Multi-Agent AI
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
+        Autonomous HR Operations & Candidate Screening Suite
+      </h1>
+      <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+        A production-grade, end-to-end HR automation portfolio featuring intelligent candidate intake, AI-driven CV scoring, RAG policy assistant, and fault-tolerant error monitoring.
+      </p>
+      
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="#workflows" class="px-6 py-3 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl shadow-lg transition">
+          Explore 5 Workflows
+        </a>
+        <a href="#sandbox" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold rounded-xl border border-slate-600 transition">
+          Live Sandbox & Chat
+        </a>
+        <a href="#downloads" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl border border-slate-700 transition">
+          Cleaned JSONs
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow space-y-16">
+
+    <!-- Navigation Tabs / Overview Cards -->
+    <section id="overview" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">⚡</div>
+        <h3 class="font-bold text-slate-900 text-lg mb-2">Live Integration</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">Connected directly via secure Oracle Cloud server to real Google Sheets, Drive, Gmail, and Gemini/Groq LLMs.</p>
+      </div>
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">🤖</div>
+        <h3 class="font-bold text-slate-900 text-lg mb-2">Multi-Agent AI</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">Advanced CV parsing, structured JSON information extraction, and automated recruiter scoring rules.</p>
+      </div>
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">🛡️</div>
+        <h3 class="font-bold text-slate-900 text-lg mb-2">Error Resilience</h3>
+        <p class="text-slate-600 text-sm leading-relaxed">Built-in Error Handler, Throttled Alerts, Daily Error Digests, and Heartbeat queue monitoring.</p>
+      </div>
+    </section>
+
+    <!-- Workflows Section -->
+    <section id="workflows" class="space-y-8">
+      <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row justify-between items-start sm:items-end">
+        <div>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">The 5 Deployed n8n Workflows</h2>
+          <p class="text-slate-600 text-sm mt-1">Detailed breakdown of the automation pipeline components.</p>
+        </div>
+        <span class="mt-2 sm:mt-0 text-xs font-semibold bg-brand-100 text-brand-800 px-3 py-1 rounded-full">5 Workflows</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Workflow 1 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md">Workflow 01</span>
+              <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Trigger: Form</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Recruitment 1 - Intake</h3>
+            <p class="text-slate-600 text-sm mb-4 leading-relaxed">Allows applicants to submit candidate details and PDF CVs. Validates name, email, allowed position, and checks for duplicate submissions before logging to Google Drive and Sheets.</p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-mono">Form Link</span>
+            <a id="wf1Btn" href="#" target="_blank" rel="noopener" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center space-x-1">
+              <span>Open Form</span> &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Workflow 2 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md">Workflow 02</span>
+              <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Trigger: Hourly / Manual</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Recruitment 2 - Batch Evaluation (AI Screening)</h3>
+            <p class="text-slate-600 text-sm mb-4 leading-relaxed">Pulls new pending applications, downloads CVs from Drive, extracts text via OCR & PDF reader, builds candidate profiles, scores candidates using LLMs, and triggers automated emails (Invites/Declines).</p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-mono">Scheduled Batch (Hourly)</span>
+            <span class="text-xs font-semibold text-brand-700 bg-brand-50 px-2 py-0.5 rounded">AI Agent Powered</span>
+          </div>
+        </div>
+
+        <!-- Workflow 3 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md">Workflow 03</span>
+              <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Trigger: Error & Cron</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Recruitment 3 - Error Handler & Heartbeat</h3>
+            <p class="text-slate-600 text-sm mb-4 leading-relaxed">Catches system failures, classifies error types (auth, network, AI parsing, data bugs), logs them to an error sheet, applies smart email alert throttling, sends daily digests, and monitors queue stagnation.</p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-mono">Global Error Workflow</span>
+            <span class="text-xs font-semibold text-brand-700 bg-brand-50 px-2 py-0.5 rounded">Active Monitoring</span>
+          </div>
+        </div>
+
+        <!-- Workflow 4 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md">Workflow 04</span>
+              <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Trigger: Chat / Webhook</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">HR Policy Assistant (RAG + LLM)</h3>
+            <p class="text-slate-600 text-sm mb-4 leading-relaxed">An intelligent RAG chatbot answering employee inquiries exclusively from company HR policy documents, citing sources and supporting multilingual queries with memory buffer.</p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-mono">Live Webhook API</span>
+            <span class="text-xs font-semibold text-brand-700 bg-brand-50 px-2 py-0.5 rounded">Vector Store RAG</span>
+          </div>
+        </div>
+
+        <!-- Workflow 5 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between lg:col-span-2">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md">Workflow 05</span>
+              <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Trigger: Form</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Job Application Coach</h3>
+            <p class="text-slate-600 text-sm mb-4 leading-relaxed">Multi-agent orchestrator that accepts a job description and CV, runs specialist AI agents one after another (CV Matcher, Cover Letter Writer, and Interview Coach), and emails a comprehensive coaching report to the candidate.</p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-mono">Form Link</span>
+            <a id="wf5Btn" href="#" target="_blank" rel="noopener" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center space-x-1">
+              <span>Open Coaching Form</span> &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Workflow Canvas -->
+    <section id="canvas" class="space-y-6">
+      <div class="border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Workflow Canvas</h2>
+        <p class="text-slate-600 text-sm mt-1">The real n8n canvas of each workflow. Browse through nodes directly.</p>
+      </div>
+      <div class="flex flex-wrap gap-2" role="tablist" id="wfTabs"></div>
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 sm:p-4">
+        <div id="wfCanvas" class="min-h-[460px]"></div>
+        <p id="wfMsg" class="text-xs text-slate-500 mt-2"></p>
+      </div>
+    </section>
+
+    <!-- Live Testing Sandbox Section -->
+    <section id="sandbox" class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="bg-slate-900 text-white p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+        <div>
+          <span class="text-xs font-semibold text-brand-400 uppercase tracking-widest">Live Interactive Environment</span>
+          <h2 class="text-2xl font-bold mt-1">HR Assistant RAG Sandbox</h2>
+          <p class="text-slate-300 text-sm mt-1">Test queries directly against the deployed n8n RAG assistant workflow.</p>
+        </div>
+        <div class="mt-4 sm:mt-0">
+          <span id="sandboxStatus" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-700 text-slate-200 border border-slate-600">
+            Checking connection...
+          </span>
+        </div>
+      </div>
+
+      <div class="p-6 sm:p-8 space-y-6">
+        <div id="msgs" class="bg-slate-50 border border-slate-200 rounded-xl p-4 h-80 overflow-y-auto custom-scrollbar space-y-3 font-sans text-sm">
+          <div class="bot bg-white p-3 rounded-lg border border-slate-200 shadow-sm text-slate-700">
+            👋 Hello! I am your NourFlow HR Policy Assistant. Ask me anything about company leave, working hours, benefits, or policies!
+          </div>
+        </div>
+
+        <form id="ask" class="flex gap-3">
+          <input id="q" type="text" placeholder="e.g., How many annual leave days do I get?" required
+                 class="flex-1 px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand-600 focus:border-brand-600 outline-none transition text-sm">
+          <button type="submit" class="px-6 py-3 bg-brand-600 hover:bg-brand-500 text-white font-semibold rounded-xl transition shadow-sm text-sm flex items-center justify-center">
+            Send Message
+          </button>
+        </form>
+
+        <div class="pt-6 border-t border-slate-200 flex flex-wrap gap-4 items-center justify-between">
+          <span class="text-sm font-semibold text-slate-700">Quick Form Actions:</span>
+          <div class="flex flex-wrap gap-3">
+            <a id="applyDirectBtn" href="#" target="_blank" rel="noopener" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition">
+              Open Intake Form
+            </a>
+            <a id="coachDirectBtn" href="#" target="_blank" rel="noopener" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition">
+              Open Coach Form
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Downloads & Documentation Section -->
+    <section id="downloads" class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900">Portfolio Documentation & Workflows</h2>
+        <p class="text-slate-600 text-sm mt-1">Cleaned workflow JSON exports and submission links.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-slate-900 text-sm">Cleaned Workflow JSONs</h4>
+            <p class="text-xs text-slate-500 mt-0.5">Sanitized exports ready for import.</p>
+          </div>
+          <span class="text-xs font-semibold text-brand-600 bg-brand-50 px-3 py-1 rounded-lg">5 Workflows</span>
+        </div>
+        <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3" id="dlLinks"></div>
+        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-slate-900 text-sm">GitHub Repository</h4>
+            <p class="text-xs text-slate-500 mt-0.5">Source code & documentation.</p>
+          </div>
+          <a href="https://github.com/nouryounis666/Full-HR-Automated-System" target="_blank" rel="noopener" class="text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg transition">View Repo</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- زرار الصعود للأعلى (Back to Top Arrow Button) في الزاوية السفلية اليمنى -->
+  <a href="#" id="backToTopBtn" class="fixed bottom-6 right-6 z-50 w-11 h-11 bg-brand-600 hover:bg-brand-500 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 pointer-events-none hover:scale-110" aria-label="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+    </svg>
+  </a>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 py-8 px-4 sm:px-6 lg:px-8 mt-16 border-t border-slate-800 text-xs text-center">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>&copy; 2026 NourFlow HR Automation Suite. Built by Nour Tamer with n8n.</p>
+      <div class="flex items-center space-x-4">
+        <span>Status: <strong class="text-slate-200" id="footerStatus">Checking...</strong></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Frontend Configuration and Script Logic -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@n8n_io/n8n-demo-component/n8n-demo.bundled.js"></script>
+  <script>
+    // إظهار وإخفاء زرار العودة للأعلى عند التمرير (Scroll)
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+        backToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+      } else {
+        backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+        backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+      }
+    });
+
+    const CONFIG = {
+      n8nBase: "https://nourtamer.duckdns.org", 
+      chat: "/webhook/d0a622c1-f5ab-4ff0-a8a5-ac60334bb23a/chat",
+      applyForm: "/form/2908f955-5845-4e62-9ad8-a5b1efa5d690",
+      coachForm: "/form/408e0d2d-9541-41d9-a9f7-a9ae81f9882d"
+    };
+
+    document.getElementById('wf1Btn').href = CONFIG.n8nBase + CONFIG.applyForm;
+    document.getElementById('wf5Btn').href = CONFIG.n8nBase + CONFIG.coachForm;
+    document.getElementById('applyDirectBtn').href = CONFIG.n8nBase + CONFIG.applyForm;
+    document.getElementById('coachDirectBtn').href = CONFIG.n8nBase + CONFIG.coachForm;
+
+    const sessionId = crypto.randomUUID();
+    const HEADERS = { "Content-Type": "application/json" };
+
+    function setStatus(online) {
+      const statusDot = document.getElementById('statusDot');
+      const statusText = document.getElementById('statusText');
+      const footerStatus = document.getElementById('footerStatus');
+      const sb = document.getElementById('sandboxStatus');
+      
+      if (sb) {
+        sb.textContent = online ? 'Connected to n8n' : 'n8n offline';
+        sb.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ' +
+          (online ? 'bg-brand-500/20 text-brand-300 border-brand-500/30' : 'bg-slate-700 text-slate-300 border-slate-600');
+      }
+      document.querySelectorAll('#wf1Btn, #wf5Btn, #applyDirectBtn, #coachDirectBtn')
+        .forEach(a => a.classList.toggle('disabled', !online));
+
+      if (online) {
+        statusDot.className = "w-2.5 h-2.5 rounded-full bg-brand-400 animate-none";
+        statusText.textContent = "System Online";
+        footerStatus.textContent = "Online";
+        footerStatus.className = "text-brand-400";
+      } else {
+        statusDot.className = "w-2.5 h-2.5 rounded-full bg-brand-500 animate-none";
+        statusText.textContent = "System Offline";
+        footerStatus.textContent = "Offline";
+        footerStatus.className = "text-brand-400";
+      }
+    }
+
+    async function checkStatus() {
+      try {
+        const res = await fetch(CONFIG.n8nBase + CONFIG.chat, { 
+          method: "POST", 
+          headers: HEADERS,
+          body: JSON.stringify({ action: "loadPreviousSession", sessionId }) 
+        });
+        setStatus(true);
+      } catch (err) {
+        setStatus(false);
+      }
+    }
+
+    checkStatus();
+
+    function addMessage(cls, text) {
+      const msgs = document.getElementById('msgs');
+      const div = document.createElement('div');
+      div.className = cls === 'me' 
+        ? 'me bg-brand-600 text-white p-3 rounded-lg ml-auto max-w-[80%] text-right shadow-sm' 
+        : 'bot bg-white text-slate-700 p-3 rounded-lg border border-slate-200 mr-auto max-w-[80%] shadow-sm';
+      
+      div.innerHTML = cls === 'me' ? text : marked.parse(text);
+      
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+      return div;
+    }
+
+    document.getElementById('ask').onsubmit = async (e) => {
+      e.preventDefault();
+      const qInput = document.getElementById('q');
+      const q = qInput.value.trim();
+      if (!q) return;
+      qInput.value = '';
+      
+      addMessage('me', q);
+      const botMsg = addMessage('bot', 'Thinking...');
+
+      try {
+        const response = await fetch(CONFIG.n8nBase + CONFIG.chat, {
+          method: "POST",
+          headers: HEADERS,
+          body: JSON.stringify({ action: "sendMessage", sessionId, chatInput: q })
+        });
+
+        if (!response.ok) throw new Error("HTTP error " + response.status);
+        const data = await response.json();
+        botMsg.innerHTML = marked.parse(data.output || data.text || "No response received.");
+        setStatus(true);
+      } catch (err) {
+        botMsg.textContent = "The HR assistant is offline right now. Please check your Oracle server connection.";
+        setStatus(false);
+      }
+    };
+  
+    const WORKFLOWS = [
+      { label: "1 · Intake",         file: "Recruitment 1 - Intake.json" },
+      { label: "2 · AI Screening",   file: "Recruitment 2 - Batch Evaluation (AI Screening).json" },
+      { label: "3 · Error Handler",  file: "Recruitment 3 - Error Handler.json" },
+      { label: "4 · HR Assistant",   file: "HR Policy Assistant (RAG).json" },
+      { label: "5 · Job Coach",      file: "Job Application Coach.json" }
+    ];
+    
+    const tabs = document.getElementById('wfTabs');
+    const canvas = document.getElementById('wfCanvas');
+    const wfMsg = document.getElementById('wfMsg');
+    
+    const workflowCache = {};
+
+    async function showWorkflow(i) {
+      tabs.querySelectorAll('button').forEach((b, k) => b.setAttribute('aria-selected', String(k === i)));
+      wfMsg.textContent = 'Loading canvas...';
+      canvas.replaceChildren();
+      
+      try {
+        let json = workflowCache[i];
+        if (!json) {
+          const res = await fetch('workflows/' + WORKFLOWS[i].file);
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          json = await res.text();
+          workflowCache[i] = json;
+        }
+        
+        const demo = document.createElement('n8n-demo');
+        demo.setAttribute('workflow', json);
+        demo.setAttribute('frame', 'true');
+        demo.setAttribute('clicktointeract', 'false'); 
+        demo.setAttribute('hidecanvaserrors', 'true');
+        canvas.appendChild(demo);
+        wfMsg.textContent = WORKFLOWS[i].file;
+      } catch (err) {
+        wfMsg.textContent = 'Could not load this workflow canvas. Make sure the file exists in the workflows folder.';
+      }
+    }
+    
+    WORKFLOWS.forEach((w, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'wf-tab px-4 py-2 text-xs font-semibold rounded-lg border border-slate-300 bg-white text-slate-700';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', 'false');
+      b.textContent = w.label;
+      b.onclick = () => showWorkflow(i);
+      tabs.appendChild(b);
+
+      const a = document.createElement('a');
+      a.href = 'workflows/' + w.file;
+      a.download = w.file;
+      a.className = 'btn-lift text-center px-3 py-2 bg-white hover:bg-brand-50 text-slate-800 text-xs font-semibold rounded-lg border border-slate-200 hover:border-brand-300';
+      a.textContent = w.label + ' ↓';
+      document.getElementById('dlLinks').appendChild(a);
+    });
+    
+    setTimeout(() => {
+      if (document.getElementById('wfTabs').children.length > 0) {
+        showWorkflow(0);
+      }
+    }, 100);
+  </script>
+</body>
+</html>

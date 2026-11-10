@@ -1,0 +1,440 @@
+{
+  "name": "Job Application Coach",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Job Application Coach",
+        "formDescription": "Paste a job description and upload your CV as a PDF. \nA team of AI agents will score your match, write a cover letter, and prepare you for the interview.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Your Name:",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Your Email:",
+              "fieldType": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Job Description ",
+              "fieldType": "textarea",
+              "placeholder": "Paste the full job description post here",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Your CV:",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".pdf",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "Thank you for applying! Our AI Recruitment Team is currently analyzing your CV and preparing your personalized career package. It will be sent to your email shortly."
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "424a1afc-9b04-42d4-830a-e2cc3a3b51b0",
+      "name": "Job Application Form",
+      "webhookId": "e31cef61-a047-4cdd-915c-5e567a43e03b"
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "YOUR_ID",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3.5-flash-lite"
+        },
+        "text": "Transcribe all the text in this CV exactly as written, section by section (contact details, summary, experience, education, skills, languages, and certificates). Return only the transcribed text.",
+        "inputType": "binary",
+        "binaryPropertyName": "Your_CV_",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "f24a2cfd-f883-4a2d-abcb-66fd6f305874",
+      "name": "Read CV"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c3a77d5d-d342-49f5-8f96-76de593b0d7e",
+              "name": "name",
+              "value": "={{ $('Job Application Form').item.json['Your Name:'] }}",
+              "type": "string"
+            },
+            {
+              "id": "bbf64114-fa3a-4013-8064-b442400886ef",
+              "name": "email",
+              "value": "={{ $('Job Application Form').item.json['Your Email:'] }}",
+              "type": "string"
+            },
+            {
+              "id": "de478151-4867-4c25-a3b7-4cc667516382",
+              "name": "jobDescription",
+              "value": "={{ $('Job Application Form').item.json['Job Description '] }}",
+              "type": "string"
+            },
+            {
+              "id": "3d969441-3710-4d1f-bcae-21217cd92637",
+              "name": "cvText",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "7745f173-09c0-4bf1-a27e-36a3dbd89ab5",
+      "name": "Prepare Application"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        240
+      ],
+      "id": "f6eb927d-c6bc-4047-be0c-bf50b11848fc",
+      "name": "Google Gemini Chat Model"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Scores how well the CV fits the job and lists strengths and gaps.",
+        "text": "=TASK FROM THE CAREER COACH:\n{{ $fromAI('task', 'What this specialist should do, plus any earlier results it needs (for example the CV Matcher strengths and gaps)', 'string') }}\n \nJOB DESCRIPTION:\n{{ $('Prepare Application').first().json.jobDescription }}\n \nCANDIDATE CV:\n{{ $('Prepare Application').first().json.cvText }}",
+        "options": {
+          "systemMessage": "You are an experienced technical recruiter. Compare the CV with the job description and reply in exactly this format:\n \n**Match Score: <number>/100**: <one short sentence why>\n \n### Strengths\n4 bullets. Each bullet: the requirement met, then a dash and short proof from the CV (max 15 words).\n \n### Gaps\n3 bullets. Each bullet: the missing skill, then a dash and one practical way to close it (max 20 words).\n \n### Keywords to Add\nOne line with up to 5 comma-separated keywords from the job post the candidate can honestly add to the CV.\n \nBe honest. Never invent experience the CV does not show.\nMaximum 180 words.\n \nFormatting rules (very important):\n- Never use tables, code blocks or horizontal lines.\n- Use short ### headings and simple bullet points (one line each).\n- No quotes from the CV, just short facts.\n- Be concise."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        528,
+        240
+      ],
+      "id": "35549792-28f6-475c-91d7-764c89fc3460",
+      "name": "CV Matcher"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Writes a tailored cover letter.",
+        "text": "=TASK FROM THE CAREER COACH:\n{{ $fromAI('task', 'What this specialist should do, plus any earlier results it needs (for example the CV Matcher strengths and gaps)', 'string') }}\n \nJOB DESCRIPTION:\n{{ $('Prepare Application').first().json.jobDescription }}\n \nCANDIDATE CV:\n{{ $('Prepare Application').first().json.cvText }}",
+        "options": {
+          "systemMessage": "You are a professional cover letter writer. Write a complete, ready-to-send cover letter.\n- 3 or 4 short paragraphs, maximum 230 words, plain text paragraphs only.\n- Start with 'Dear Hiring Manager,' and end with 'Kind regards,' and the candidate's name.\n- Use only facts from the CV. Never invent experience, numbers or companies.\n- Connect 2 or 3 strengths to the job requirements, and mention one gap positively as something the candidate is learning.\nReturn only the letter, without a title.\n \nFormatting rules (very important):\n- Never use tables, code blocks or horizontal lines.\n- Use short ### headings and simple bullet points (one line each).\n- No quotes from the CV, just short facts.\n- Be concise."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        816,
+        240
+      ],
+      "id": "5f78aeec-b3b6-4ab8-80d6-1e0903638ee0",
+      "name": "Cover Letter Writer"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Prepares likely interview questions with model answers.",
+        "text": "=TASK FROM THE CAREER COACH:\n{{ $fromAI('task', 'What this specialist should do, plus any earlier results it needs (for example the CV Matcher strengths and gaps)', 'string') }}\n \nJOB DESCRIPTION:\n{{ $('Prepare Application').first().json.jobDescription }}\n \nCANDIDATE CV:\n{{ $('Prepare Application').first().json.cvText }}",
+        "options": {
+          "systemMessage": "You are an interview coach. Write 5 likely interview questions with short model answers, in exactly this format:\n \n**1. <question>**\n<model answer, maximum 50 words>\n \nInclude: 2 technical questions about the main required skills, 2 behavioral questions (answer briefly in STAR style: situation, action, result), and 1 question about the candidate's biggest gap with an honest learning-plan answer.\nBase every answer on the real CV.\n \nFormatting rules (very important):\n- Never use tables, code blocks or horizontal lines.\n- Use short ### headings and simple bullet points (one line each).\n- No quotes from the CV, just short facts.\n- Be concise."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        1104,
+        240
+      ],
+      "id": "f3206e22-ca4f-4169-b2b5-7cfe937aa78e",
+      "name": "Interview Coach"
+    },
+    {
+      "parameters": {
+        "jsCode": "const run = $input.first().json;\nconst steps = run.intermediateSteps || [];\n \nconst clean = value => {\n  const text = typeof value === 'string' ? value : JSON.stringify(value);\n  try {\n    const parsed = JSON.parse(text);\n    const first = Array.isArray(parsed) ? parsed[0] : parsed;\n    return first.output ?? first.response ?? first.text ?? text;\n  } catch {\n    return text;\n  }\n};\n \nconst resultOf = word => {\n  const step = steps.filter(s => String(s.action?.tool || '').toLowerCase().includes(word)).pop();\n  return step ? clean(step.observation) : null;\n};\n \nconst sections = [\n  ['Match Analysis', resultOf('matcher'), 'CV Matcher'],\n  ['Tailored Cover Letter', resultOf('letter'), 'Cover Letter Writer'],\n  ['Interview Preparation', resultOf('interview'), 'Interview Coach'],\n];\n \nconst report = [run.output]\n  .concat(sections.map(([title, body, agent]) => '## ' + title + '\\n\\n' + (body || '_The ' + agent + ' did not run this time. Please submit the form again._')))\n  .join('\\n\\n');\n \nreturn [{ json: { report, specialistsUsed: sections.filter(s => s[1]).length } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        0
+      ],
+      "id": "c7089e6a-4282-4b02-b36e-12bef12b6949",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "mode": "markdownToHtml",
+        "markdown": "={{ $json.report }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        0
+      ],
+      "id": "186038df-7b0f-4de2-b307-c14a5932d2bf",
+      "name": "Markdown"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        816,
+        432
+      ],
+      "id": "9355add0-d74e-4827-adda-65f60fe15643",
+      "name": "Cover Letter Writer1"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        432
+      ],
+      "id": "2c00d01c-a733-42e4-9342-8acc66d86631",
+      "name": "Interview Coach Model"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        528,
+        432
+      ],
+      "id": "a4055c13-cc36-4bc4-962e-945bf57bbe15",
+      "name": "CV Matcher Model"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Prepare a job application package for this candidate.\n \nCandidate name: {{ $json.name }}\n \nJOB DESCRIPTION:\n{{ $json.jobDescription }}\n \nCANDIDATE CV:\n{{ $json.cvText }}",
+        "options": {
+          "systemMessage": "You are a senior career coach who manages a team of three specialist agents, available to you as tools:\n- CV Matcher: scores how well the CV fits the job and lists strengths and gaps.\n- Cover Letter Writer: writes a tailored cover letter.\n- Interview Coach: prepares likely interview questions with model answers.\n \nHow to work:\n1. Call CV Matcher first.\n2. Then call Cover Letter Writer, and include the CV Matcher's strengths and gaps in your task message.\n3. Then call Interview Coach, and include the CV Matcher's gaps in your task message.\n4. Each specialist automatically receives the job description and the CV.\n5. You MUST call all three specialists, each exactly once, before your final answer.\n \nYour final answer is only the opening of the report (the specialists' full work is added automatically after it). Write in Markdown:\n- One greeting line using the candidate's first name.\n- A 2-sentence honest summary of the match, including the score from CV Matcher.\n- ### Your Next 3 Steps: three short, practical action items.\n \nKeep it under 120 words and encouraging.",
+          "returnIntermediateSteps": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        688,
+        0
+      ],
+      "id": "acf95236-221f-4cc3-8091-15f2949f9c57",
+      "name": "Career Coach (Orchestrator)"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Prepare Application').item.json.email }}",
+        "subject": "=Your job application package - {{ $('Prepare Application').item.json.name }}",
+        "message": "=<div style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f3f4f6; padding: 40px 20px;\">\n  <div style=\"max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);\">\n    \n    <!-- Purple Header -->\n    <div style=\"background-color: #8b5cf6; padding: 30px 40px; color: #ffffff;\">\n      <div style=\"font-size: 12px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; color: #ddd6fe;\">\n        Job Application Coach\n      </div>\n      <h1 style=\"margin: 0; font-size: 24px; font-weight: 600;\">\n        Your personal coaching report\n      </h1>\n    </div>\n    \n    <!-- Report Body -->\n    <div style=\"padding: 30px 40px; color: #374151; line-height: 1.6; font-size: 15px;\">\n      {{ $json.data }}\n    </div>\n    \n  </div>\n</div>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1504,
+        0
+      ],
+      "id": "82764fda-c59d-4596-a440-0bb1ff501b03",
+      "name": "Send application report",
+      "webhookId": "42a7ef7c-b93e-453c-9366-2b19bd9f3a9c"
+    }
+  ],
+  "connections": {
+    "Job Application Form": {
+      "main": [
+        [
+          {
+            "node": "Read CV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read CV": {
+      "main": [
+        [
+          {
+            "node": "Prepare Application",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Application": {
+      "main": [
+        [
+          {
+            "node": "Career Coach (Orchestrator)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Career Coach (Orchestrator)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CV Matcher": {
+      "ai_tool": [
+        [
+          {
+            "node": "Career Coach (Orchestrator)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cover Letter Writer": {
+      "ai_tool": [
+        [
+          {
+            "node": "Career Coach (Orchestrator)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interview Coach": {
+      "ai_tool": [
+        [
+          {
+            "node": "Career Coach (Orchestrator)",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "Send application report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cover Letter Writer1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Cover Letter Writer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interview Coach Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Interview Coach",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CV Matcher Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "CV Matcher",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Career Coach (Orchestrator)": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "nodeGroups": []
+}
