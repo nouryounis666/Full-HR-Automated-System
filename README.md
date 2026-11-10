@@ -1,5 +1,13 @@
 # 🤖 NourFlow HR | Enterprise AI & Automation Portfolio
 
+[![n8n](https://img.shields.io/badge/n8n-FF6C37?style=for-the-badge&logo=n8n&logoColor=white)](https://n8n.io/)
+[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white)](https://ai.google.dev/)
+[![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white)](https://groq.com/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Oracle Cloud](https://img.shields.io/badge/Oracle%20Cloud-F80000?style=for-the-badge&logo=oracle&logoColor=white)](https://www.oracle.com/cloud/)
+[![Google Drive](https://img.shields.io/badge/Google%20Drive-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/)
+[![Google Sheets](https://img.shields.io/badge/Google%20Sheets-34A853?style=for-the-badge&logo=google-sheets&logoColor=white)](https://workspace.google.com/products/sheets/)
+
 An enterprise-grade, end-to-end HR automation and intelligent candidate screening platform built using **n8n**, **Docker**, **Oracle Cloud**, and multi-agent **LLMs (Gemini & Groq)**.
 
 🌐 **[View Live Portfolio Website & Demo](https://nouryounis666.github.io/Full-HR-Automated-System/)**
@@ -36,18 +44,18 @@ Multi-agent orchestrator that reviews job descriptions and candidate CVs to gene
 ---
 
 ## 🛠️ Tech Stack & Architecture
-* **Orchestration:** n8n (Self-hosted on Docker via WSL2)
-* **Cloud & Hosting:** Oracle Cloud Infrastructure & DuckDNS
-* **AI & LLMs:** Google Gemini API, Groq LLM, Vector Embeddings
-* **Storage & Databases:** Google Drive, Google Sheets
-* **Frontend Portfolio:** HTML5, Tailwind CSS, JavaScript
+- **Orchestration:** n8n (Self-hosted on Docker via WSL2)
+- **Cloud & Hosting:** Oracle Cloud Infrastructure & DuckDNS
+- **AI & LLMs:** Google Gemini API, Groq LLM, Vector Embeddings
+- **Storage & Databases:** Google Drive, Google Sheets
+- **Frontend Portfolio:** HTML5, Tailwind CSS, JavaScript
 
 ---
 
 ## 📂 Repository Structure
-* `index.html` — The main interactive portfolio dashboard.
-* `workflows/` — Sanitized and cleaned n8n workflow JSON exports.
-* `images/` — Architecture preview screenshots.
+- `index.html` — The main interactive portfolio dashboard.
+- `workflows/` — Sanitized and cleaned n8n workflow JSON exports.
+- `images/` — Architecture preview screenshots.
 
 ---
 
