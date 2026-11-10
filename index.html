@@ -50,7 +50,6 @@
   <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
-        <!-- زرار صعود للأعلى سريع من اللوجو أو الاسم في الـ Navbar -->
         <a href="#" class="flex items-center space-x-3 group">
           <div class="w-9 h-9 rounded-lg bg-brand-600 flex items-center justify-center font-bold text-white text-lg shadow group-hover:bg-brand-500 transition">NF</div>
           <div>
@@ -306,7 +305,6 @@
 
   </main>
 
-  <!-- زرار الصعود للأعلى (Back to Top Arrow Button) في الزاوية السفلية اليمنى -->
   <a href="#" id="backToTopBtn" class="fixed bottom-6 right-6 z-50 w-11 h-11 bg-brand-600 hover:bg-brand-500 text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 pointer-events-none hover:scale-110" aria-label="Back to top">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
       <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
@@ -326,7 +324,6 @@
   <!-- Frontend Configuration and Script Logic -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/@n8n_io/n8n-demo-component/n8n-demo.bundled.js"></script>
   <script>
-    // إظهار وإخفاء زرار العودة للأعلى عند التمرير (Scroll)
     const backToTopBtn = document.getElementById('backToTopBtn');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 300) {
