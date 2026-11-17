@@ -14,10 +14,10 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.4,
       "position": [
-        0,
-        -80
+        -1680,
+        272
       ],
-      "id": "eb0100a9-39a5-4420-8b63-b173c63f1ba8",
+      "id": "db771d04-1ab4-4c0b-a01e-792727cb0b6e",
       "name": "Every Hour"
     },
     {
@@ -25,10 +25,10 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        0,
-        -272
+        -1680,
+        80
       ],
-      "id": "1227d32e-12c1-442c-87fe-c53eeb5ef55a",
+      "id": "ac634969-eb5c-4b47-84c9-b649b0240aee",
       "name": "Run Batch Now"
     },
     {
@@ -38,10 +38,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        448,
-        -176
+        -1232,
+        176
       ],
-      "id": "92e7484b-9f72-4202-8542-e692e04fd427",
+      "id": "2222dfa2-1ac7-46fd-92a8-bdba245e918b",
       "name": "Loop Over Applications"
     },
     {
@@ -91,10 +91,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        672,
-        -160
+        -1008,
+        192
       ],
-      "id": "b438bc84-afab-4832-9c75-10fd990dea99",
+      "id": "94971e20-5c4c-4cd8-9069-06ca73ce4956",
       "name": "Current Application"
     },
     {
@@ -110,19 +110,13 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        896,
-        -160
+        -784,
+        192
       ],
-      "id": "2eb06bd7-c84b-4573-8fb1-80880aaf7f0e",
+      "id": "2360906f-5850-4a88-bb50-b5e47ca86f28",
       "name": "Download CV",
       "retryOnFail": true,
       "waitBetweenTries": 3000,
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "uVhoTyfLN9E4bajC",
-          "name": "Google Drive account"
-        }
-      },
       "onError": "continueErrorOutput"
     },
     {
@@ -133,10 +127,10 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1.1,
       "position": [
-        1120,
-        -160
+        -560,
+        192
       ],
-      "id": "2faebcdd-f4d0-4fb5-ad8e-14e1ed98a679",
+      "id": "a16db491-39e6-4058-a0f9-16b79028b441",
       "name": "Extract CV Text"
     },
     {
@@ -166,10 +160,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1344,
-        -160
+        -336,
+        192
       ],
-      "id": "87b08f0f-ba85-4043-9683-078331a35862",
+      "id": "a1b7e6df-492d-4b9d-8b6b-9f415c629ed7",
       "name": "Readable PDF?"
     },
     {
@@ -195,10 +189,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        1680,
-        -352
+        0,
+        0
       ],
-      "id": "a0c5d434-dc60-4da0-a179-35f264fc2693",
+      "id": "b33c84bd-dd46-4fb0-b58b-dd7fbb82389a",
       "name": "CV Text (PDF)"
     },
     {
@@ -206,7 +200,7 @@
         "resource": "document",
         "modelId": {
           "__rl": true,
-          "value": "models/gemini-3.5-flash-lite",
+          "value": "YOUR_ID",
           "mode": "list",
           "cachedResultName": "models/gemini-3.5-flash-lite"
         },
@@ -215,19 +209,13 @@
       "type": "@n8n/n8n-nodes-langchain.googleGemini",
       "typeVersion": 1.2,
       "position": [
-        1568,
-        -144
+        -112,
+        208
       ],
-      "id": "c91f15ed-5138-4f91-950c-d90dd6da6994",
+      "id": "2c2dca67-2e2c-4d31-9e64-e21e5b8b7352",
       "name": "OCR Scanned CV",
       "retryOnFail": true,
       "waitBetweenTries": 3000,
-      "credentials": {
-        "googlePalmApi": {
-          "id": "6LMV1f80rGZvL3YD",
-          "name": "Google Gemini(PaLM) Api account 2"
-        }
-      },
       "onError": "continueErrorOutput"
     },
     {
@@ -253,10 +241,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        1792,
-        -144
+        112,
+        208
       ],
-      "id": "ab4d5543-ecd7-42b3-9683-d09a2eb04933",
+      "id": "23d68f45-5dd7-49e9-afbd-c61297c2b0c4",
       "name": "CV Text (OCR)"
     },
     {
@@ -324,10 +312,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        2016,
-        -144
+        336,
+        208
       ],
-      "id": "7733d257-0bfa-4358-9c9e-ad0e140fcec9",
+      "id": "09a231f0-154f-4c45-81f8-a6858939647f",
       "name": "Prepare Application"
     },
     {
@@ -340,19 +328,13 @@
       "type": "@n8n/n8n-nodes-langchain.informationExtractor",
       "typeVersion": 1.2,
       "position": [
-        2240,
-        -144
+        560,
+        208
       ],
-      "id": "24d67f43-5849-4f60-bc71-37de55d62d4d",
+      "id": "6d2f5055-0e7f-4aa0-b732-e9a82d1db6d6",
       "name": "Extract Candidate Profile",
       "retryOnFail": true,
       "waitBetweenTries": 3000,
-      "credentials": {
-        "googlePalmApi": {
-          "id": "6LMV1f80rGZvL3YD",
-          "name": "Google Gemini(PaLM) Api account 2"
-        }
-      },
       "onError": "continueErrorOutput"
     },
     {
@@ -365,10 +347,10 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.9,
       "position": [
-        2608,
-        -144
+        928,
+        208
       ],
-      "id": "d4a2ba1e-678f-4fb7-a93d-4500049141bf",
+      "id": "2ca059d7-da8a-46bb-aae9-e99917b1b468",
       "name": "Score Candidate",
       "retryOnFail": true,
       "waitBetweenTries": 3000,
@@ -383,10 +365,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        2752,
-        64
+        1072,
+        416
       ],
-      "id": "581be460-406a-4697-8063-9b93caad21f5",
+      "id": "018f75de-796c-4b85-9efc-cfb8f0b49db7",
       "name": "Evaluation Schema (Auto-fix)"
     },
     {
@@ -396,17 +378,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        2768,
-        240
+        1088,
+        592
       ],
-      "id": "f112c987-1ac2-4e07-b543-be2842826bbd",
-      "name": "Fixing Model",
-      "credentials": {
-        "openRouterApi": {
-          "id": "b0i6UqOSrhYJJoki",
-          "name": "OpenRouter account"
-        }
-      }
+      "id": "6db04933-c12c-48f7-bacf-830b9b157231",
+      "name": "Fixing Model"
     },
     {
       "parameters": {
@@ -416,17 +392,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
       "typeVersion": 1,
       "position": [
-        2608,
-        48
+        928,
+        400
       ],
-      "id": "f44ee9dd-c3c5-4128-b97e-409d2c8b9db5",
-      "name": "Scoring Model",
-      "credentials": {
-        "groqApi": {
-          "id": "BF2QNqQb9AAKWc1b",
-          "name": "Groq account"
-        }
-      }
+      "id": "76ef2e3d-9627-49ba-b9b4-fbd9ff3c7f3e",
+      "name": "Scoring Model"
     },
     {
       "parameters": {
@@ -436,17 +406,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
       "typeVersion": 1,
       "position": [
-        2240,
-        32
+        560,
+        384
       ],
-      "id": "da04fa73-89c2-4b34-af4f-f9a073ef4507",
-      "name": "Profile Model",
-      "credentials": {
-        "groqApi": {
-          "id": "BF2QNqQb9AAKWc1b",
-          "name": "Groq account"
-        }
-      }
+      "id": "25f17334-4335-4c34-9d66-2a3a3e0e10f5",
+      "name": "Profile Model"
     },
     {
       "parameters": {
@@ -455,10 +419,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2976,
-        -144
+        1296,
+        208
       ],
-      "id": "aa0f3894-385f-4dbb-acad-05a41ea8b7d9",
+      "id": "70a967df-b311-4641-b15c-e5f947b9c441",
       "name": "Validate Evaluation"
     },
     {
@@ -489,10 +453,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        3200,
-        -144
+        1520,
+        208
       ],
-      "id": "44c7a591-9142-45d0-b5fa-17212935c644",
+      "id": "eb6ee1af-e35f-4a2c-ba43-730dbc296f4f",
       "name": "Evaluation Valid?"
     },
     {
@@ -580,10 +544,10 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        3424,
-        -144
+        1744,
+        208
       ],
-      "id": "6a47b2e2-9d6a-41df-8ed5-6ac993051af2",
+      "id": "ed0628df-2e7d-4b75-8bb9-82dbc10110dc",
       "name": "Decision"
     },
     {
@@ -598,22 +562,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3680,
-        240
+        2000,
+        592
       ],
-      "id": "e9d59512-f835-4eef-a6b9-cd2828d9260a",
+      "id": "1992a67d-c628-4118-8b7c-ca2f2e643a6e",
       "name": "Send Polite Decline",
-      "webhookId": "d5af0da8-1e64-4c15-a2b1-6f21a9632965",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "BXSveKXkJzQFnjfe",
-          "name": "Gmail account"
-        }
-      }
+      "webhookId": "d5af0da8-1e64-4c15-a2b1-6f21a9632965"
     },
     {
       "parameters": {
-        "sendTo": "nouryounis666@gmail.com",
+        "sendTo": "YOUR_SENDTO",
         "subject": "=Borderline candidate: {{ $('Validate Evaluation').first().json.name }} - {{ $('Validate Evaluation').first().json.position }} ({{ $('Validate Evaluation').first().json.score }}/100)",
         "message": "=<div style=\"font-family: -apple-system, sans-serif; color: #1e293b; max-width: 650px; background: #f8fafc; padding: 30px;\">   <div style=\"background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);\">          <div style=\"background: #f59e0b; padding: 20px; color: white;\">       <h2 style=\"margin: 0; font-size: 20px;\">Manual Review Required (Borderline Candidate)</h2>     </div>      <div style=\"padding: 24px;\">       <h3 style=\"margin-top: 0; color: #0f172a; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;\">Candidate Profile</h3>       <table style=\"width: 100%; font-size: 14px; margin-bottom: 20px;\">         <tr><td style=\"padding: 6px 0; font-weight: bold; width: 130px;\">Name:</td><td>{{ $('Prepare Application').item.json.name }}</td></tr>         <tr><td style=\"padding: 6px 0; font-weight: bold;\">Position:</td><td>{{ $('Prepare Application').item.json.position }}</td></tr>         <tr><td style=\"padding: 6px 0; font-weight: bold;\">AI Score:</td><td><strong style=\"color: #ea580c; font-size: 16px;\">{{ $json.score }}/100</strong></td></tr>       </table>        <h3 style=\"color: #0f172a; font-size: 16px; margin: 20px 0 10px 0;\">Executive Summary</h3>       <p style=\"margin: 0 0 10px 0; font-size: 14px;\"><strong>Strengths:</strong> {{ $json.strengths }}</p>       <p style=\"margin: 0 0 20px 0; font-size: 14px;\"><strong>Concerns:</strong> <span style=\"color: #dc2626;\">{{ $json.concerns }}</span></p>        <h3 style=\"color: #0f172a; font-size: 16px; margin: 20px 0 10px 0;\">Skills Analysis</h3>       <div style=\"background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px; border-radius: 4px; margin-bottom: 10px; font-size: 14px;\">         <strong>Matched Requirements:</strong><br>{{ $json.matched_requirements.join(' • ') }}       </div>       <div style=\"background: #fef2f2; border: 1px solid #fecaca; padding: 12px; border-radius: 4px; font-size: 14px;\">         <strong>Missing Requirements:</strong><br>{{ $json.missing_requirements.join(' • ') }}       </div>        <h3 style=\"color: #0f172a; font-size: 16px; margin: 25px 0 10px 0;\">Suggested Interview Questions (If Proceeding)</h3>       <ul style=\"margin: 0; padding-left: 20px; font-size: 14px; color: #334155;\">         {{ $json.interview_questions.map(q => `<li style=\"margin-bottom: 8px;\">${q}</li>`).join('') }}       </ul>     </div>   </div> </div>",
         "options": {
@@ -623,35 +581,27 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3680,
-        32
+        2000,
+        384
       ],
-      "id": "5a471b83-d240-4c48-b4a9-4c2cb59aeeca",
+      "id": "e1f13af3-75ef-4b11-a240-566f143c535c",
       "name": "Flag Borderline for HR",
-      "webhookId": "7e397d84-d251-4216-875a-38991a16bac0",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "BXSveKXkJzQFnjfe",
-          "name": "Gmail account"
-        }
-      }
+      "webhookId": "7e397d84-d251-4216-875a-38991a16bac0"
     },
     {
       "parameters": {
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8",
-          "mode": "list",
-          "cachedResultName": "Horizon Byte - Applications",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8/edit?usp=drivesdk"
+          "mode": "id",
+          "value": "YOUR_ID"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Applications",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8/edit#gid=0"
+          "cachedResultUrl": "YOUR_GOOGLE_URL"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -845,34 +795,27 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        4224,
-        544
+        2544,
+        896
       ],
-      "id": "26a2150a-780e-44a0-bb3b-babcc91246a7",
+      "id": "d1084f79-5960-462b-af4b-b89af2a50951",
       "name": "Save Result to Sheet",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "kudya68vP69F8SHG",
-          "name": "Google Sheets account"
-        }
-      }
+      "retryOnFail": true
     },
     {
       "parameters": {
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8",
-          "mode": "list",
-          "cachedResultName": "Horizon Byte - Applications",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8/edit?usp=drivesdk"
+          "mode": "id",
+          "value": "YOUR_ID"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Applications",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8/edit#gid=0"
+          "cachedResultUrl": "YOUR_GOOGLE_URL"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -1065,17 +1008,12 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        3632,
-        480
+        1952,
+        832
       ],
-      "id": "f0ed7afb-8b86-4bbb-873b-3c0a9258932e",
+      "id": "4a82e1ab-4768-4c74-91fc-c65bf6c0843a",
       "name": "Mark for Manual Review",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "kudya68vP69F8SHG",
-          "name": "Google Sheets account"
-        }
-      }
+      "retryOnFail": true
     },
     {
       "parameters": {
@@ -1089,22 +1027,16 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3680,
-        -160
+        2000,
+        192
       ],
-      "id": "4fc94652-18d8-4a1c-bedc-9c805ad8db9f",
+      "id": "ce1a9c9d-47fb-4ebf-a111-2e52a0b80ab3",
       "name": "Invite to Interview",
-      "webhookId": "6f73a7cc-53a2-401c-88d7-eb137a8f41ec",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "BXSveKXkJzQFnjfe",
-          "name": "Gmail account"
-        }
-      }
+      "webhookId": "6f73a7cc-53a2-401c-88d7-eb137a8f41ec"
     },
     {
       "parameters": {
-        "sendTo": "nouryounis666@gmail.com",
+        "sendTo": "YOUR_SENDTO",
         "subject": "=Candidate to interview: {{ $('Validate Evaluation').first().json.name }} - {{ $('Validate Evaluation').first().json.position }} ({{ $('Validate Evaluation').first().json.score }}/100)",
         "message": "=<div style=\"font-family: -apple-system, sans-serif; color: #1e293b; max-width: 700px; background: #f8fafc; padding: 30px;\">\n  <div style=\"background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);\">\n    \n    <div style=\"background: #0f766e; padding: 24px; color: white;\">\n      <p style=\"margin: 0 0 4px 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;\">Candidate Report</p>\n      <h2 style=\"margin: 0; font-size: 24px;\">{{ $('Prepare Application').item.json.name }} - {{ $('Validate Evaluation').item.json.score }}/100</h2>\n    </div>\n\n    <div style=\"padding: 32px 24px;\">\n      <table style=\"width: 100%; font-size: 14px; margin-bottom: 24px; line-height: 1.6;\">\n        <tr><td style=\"font-weight: bold; width: 100px;\">Position:</td><td>{{ $('Prepare Application').item.json.position }}</td></tr>\n        <tr><td style=\"font-weight: bold;\">Email:</td><td><a href=\"mailto:{{ $('Prepare Application').item.json.email }}\">{{ $('Prepare Application').item.json.email }}</a></td></tr>\n        <tr><td style=\"font-weight: bold;\">Experience:</td><td>{{ $('Validate Evaluation').item.json.yearsExperience }} years</td></tr>\n        <tr><td style=\"font-weight: bold;\">Top skills:</td><td>{{ $('Validate Evaluation').item.json.topSkills }}</td></tr>\n      </table>\n\n      <h3 style=\"color: #0f172a; font-size: 16px; margin: 0 0 10px 0;\">Strengths</h3>\n      <p style=\"margin: 0 0 24px 0; font-size: 14px; line-height: 1.6;\">{{ $('Validate Evaluation').item.json.strengths }}</p>\n\n      <h3 style=\"color: #0f172a; font-size: 16px; margin: 0 0 10px 0;\">Missing</h3>\n      <ul style=\"margin: 0 0 24px 0; padding-left: 20px; font-size: 14px; color: #475569; line-height: 1.6;\">\n        {{ ($('Validate Evaluation').item.json.missing_requirements || []).map(req => `<li style=\"margin-bottom: 6px;\">${req}</li>`).join('') }}\n      </ul>\n\n      <h3 style=\"color: #0f172a; font-size: 16px; margin: 0 0 10px 0;\">Suggested Interview Questions</h3>\n      <div style=\"background: #f1f5f9; padding: 20px; border-radius: 6px;\">\n        <ol style=\"margin: 0; padding-left: 20px; font-size: 14px; color: #334155; line-height: 1.7;\">\n          {{ ($('Validate Evaluation').item.json.interview_questions || []).map(q => `<li style=\"margin-bottom: 12px;\">${q}</li>`).join('') }}\n        </ol>\n      </div>\n    </div>\n  </div>\n</div>",
         "options": {
@@ -1114,18 +1046,12 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3904,
-        -160
+        2224,
+        192
       ],
-      "id": "f9852023-c7ff-40a7-a073-83154a405aa8",
+      "id": "81c3bf4e-934c-4f0a-917e-e1394e2d1bdf",
       "name": "Send Profile Details (HR Email)",
-      "webhookId": "aff582c0-8c55-4fe8-84fd-d29e0ccac41c",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "BXSveKXkJzQFnjfe",
-          "name": "Gmail account"
-        }
-      }
+      "webhookId": "aff582c0-8c55-4fe8-84fd-d29e0ccac41c"
     },
     {
       "parameters": {
@@ -1168,15 +1094,15 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        3184,
-        480
+        1504,
+        832
       ],
-      "id": "94032a8c-f9e5-435c-996b-19cd48ea8f17",
+      "id": "c393f132-6696-4af7-86a6-e7a965eab2a5",
       "name": "Describe AI Failure"
     },
     {
       "parameters": {
-        "sendTo": "nouryounis666@gmail.com",
+        "sendTo": "YOUR_SENDTO",
         "subject": "=Action Required: Manual CV Review - {{ $('Current Application').item.json.name }}",
         "message": "=<div style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1e293b; max-width: 600px; background: #f8fafc; padding: 30px;\">   <div style=\"background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);\">          <div style=\"background: #dc2626; padding: 20px; color: white;\">       <h2 style=\"margin: 0; font-size: 20px;\">Manual CV Review Required</h2>     </div>      <div style=\"padding: 24px;\">       <p style=\"margin-top: 0; font-size: 15px; color: #334155;\">The automated screening pipeline encountered an issue processing an application and requires manual human review.</p>              <table style=\"width: 100%; font-size: 14px; margin: 20px 0; border-collapse: collapse;\">         <tr>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: bold; width: 120px; color: #64748b;\">Candidate:</td>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0;\">{{ $('Current Application').item.json.name }}</td>         </tr>         <tr>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #64748b;\">Position:</td>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0;\">{{ $('Current Application').item.json.position }}</td>         </tr>         <tr>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #64748b;\">Email:</td>           <td style=\"padding: 10px; border-bottom: 1px solid #e2e8f0;\">             <a href=\"mailto:{{ $('Current Application').item.json.email }}\" style=\"color: #2563eb; text-decoration: none;\">{{ $('Current Application').item.json.email }}</a>           </td>         </tr>       </table>        <h3 style=\"color: #0f172a; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; margin: 24px 0 8px 0;\">Error Details / Reason</h3>       <div style=\"background: #fef2f2; border-left: 4px solid #ef4444; padding: 16px; border-radius: 4px; font-size: 14px; color: #991b1b; font-family: monospace;\">\n  {{ $json.problems || 'Unknown failure in processing pipeline.' }}\n</div>        <p style=\"margin: 24px 0 0 0; font-size: 14px; color: #64748b;\">The Google Sheet has been updated with a \"manual review\" status for this record.</p>     </div>   </div> </div>",
         "options": {
@@ -1186,18 +1112,12 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        3856,
-        480
+        2176,
+        832
       ],
-      "id": "57771bf8-174b-4ac9-81cf-b8aa4966cd76",
+      "id": "eb1df04a-d74a-497e-8c95-68f46ba2c750",
       "name": "Notify HR: Manual Review",
-      "webhookId": "28db6f8d-d554-44a9-8efa-536779602dea",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "BXSveKXkJzQFnjfe",
-          "name": "Gmail account"
-        }
-      }
+      "webhookId": "28db6f8d-d554-44a9-8efa-536779602dea"
     },
     {
       "parameters": {
@@ -1240,10 +1160,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.5,
       "position": [
-        3408,
-        480
+        1728,
+        832
       ],
-      "id": "457eb760-6c65-40a3-aa52-cf15839a93a1",
+      "id": "84fbe34c-2a9a-4541-845b-2549c5a549c3",
       "name": "Manual Review Info"
     },
     {
@@ -1251,14 +1171,14 @@
         "documentId": {
           "__rl": true,
           "mode": "id",
-          "value": "1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8"
+          "value": "YOUR_ID"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
           "cachedResultName": "Applications",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zg3gItd--xQt6BVvfJZZYq5wOKN0rdXkDtNgdqkd9c8/edit#gid=0"
+          "cachedResultUrl": "YOUR_GOOGLE_URL"
         },
         "filtersUI": {
           "values": [
@@ -1273,21 +1193,16 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        224,
-        -176
+        -1456,
+        176
       ],
-      "id": "f007c842-482e-495c-9123-398183fb14d0",
+      "id": "e4788572-0918-4ad9-9bad-fb17f733a426",
       "name": "Get New Applications",
       "alwaysOutputData": true,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "kudya68vP69F8SHG",
-          "name": "Google Sheets account"
-        }
-      }
+      "retryOnFail": true,
+      "waitBetweenTries": 3000
     }
   ],
-  "pinData": {},
   "connections": {
     "Run Batch Now": {
       "main": [
@@ -1677,22 +1592,15 @@
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "timeSavedMode": "fixed",
-    "errorWorkflow": "oO2vF05rJmxCOgg0",
+    "errorWorkflow": "96OiU501tqbsjvP7",
     "timezone": "Africa/Cairo",
     "callerPolicy": "workflowsFromSameOwner",
-    "executionTimeout": -1,
     "availableInMCP": false
   },
-  "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "c80dc7e3d47cdb12d1bdbe5ca22544a4f0ea5b853d5b8de8aaff846a134e6683"
-  },
-  "nodeGroups": [],
-  "id": "OZFysj25VFLincSV",
-  "tags": []
+  "nodeGroups": []
 }
